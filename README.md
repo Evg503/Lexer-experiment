@@ -6,7 +6,7 @@ A simple lexer implementation in C++ that tokenizes identifiers, numbers, operat
 
 1. Clone the repository:
     ```sh
-    git clone <repository-url>
+    git clone <repository-url> Lexer
     cd Lexer
     ```
 

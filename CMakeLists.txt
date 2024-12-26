@@ -9,7 +9,15 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 # Include directories
 include_directories(src)
 # Add source files
-add_library(Lexer src/Lexer.cpp)
+add_library(Lexer src/Lexer.cpp
+    src/DigitComponent.cpp
+    src/Lexer.cpp
+    src/QuotedStringComponent.cpp
+    src/IdentifierComponent.cpp
+    src/InputStream.cpp
+    src/OperatorComponent.cpp
+    src/CommentStringComponent.cpp
+)
 
 add_executable(LexerMain src/main.cpp)
 target_link_libraries(LexerMain Lexer)

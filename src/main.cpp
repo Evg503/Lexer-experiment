@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
         std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
         Lexer lexer(content);
         while (lexer.hasMoreTokens()) {
-            std::vector<Lexer::Token> tokens = lexer.getNextLineTokens();
-            for (const Lexer::Token& token : tokens) {
+            std::vector<Token> tokens = lexer.getNextLineTokens();
+            for (const Token& token : tokens) {
                 std::cout << token.to_string() << std::endl;
             }
         }
