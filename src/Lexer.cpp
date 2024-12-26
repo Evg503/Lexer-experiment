@@ -16,19 +16,19 @@ std::vector<Token> Lexer::getNextLineTokens()
     return tokens;
 }
 
-Lexer::Lexer(std::string_view source)
-    : source(source)
-    , identifierComponent(this->source)
-    , digitComponent(this->source)
-    , operatorComponent(this->source) 
-    , quotedStringComponent(this->source)
-    , commentStringComponent(this->source) // Initialize CommentStringComponent
-    {}
+Lexer::Lexer(std::string_view source_view)
+    : source(source_view){
+    components.push_back(std::make_unique<CommentStringComponent>(source));
+    components.push_back(std::make_unique<DigitComponent>(source));
+    components.push_back(std::make_unique<OperatorComponent>(source));
+    components.push_back(std::make_unique<IdentifierComponent>(source));
+    components.push_back(std::make_unique<QuotedStringComponent>(source));
+}
 
-    bool Lexer::tryTokenize()
-    {
-        return true;
-    }
+bool Lexer::tryTokenize()
+{
+    return true;
+}
 
 void Lexer::skipWhitespace()
 {
@@ -44,30 +44,13 @@ Token Lexer::nextToken()
         return {TokenType::EndOfFile, ""};
     }
 
-    if (commentStringComponent.tryTokenize())
+    for (auto& component : components)
     {
-        return commentStringComponent.nextToken();
+        if (component->tryTokenize())
+        {
+            return component->nextToken();
+        }
     }
-    if (identifierComponent.tryTokenize())
-    {
-        return identifierComponent.nextToken();
-    }
-
-    if (digitComponent.tryTokenize())
-    {
-        return digitComponent.nextToken();
-    }
-
-    if (operatorComponent.tryTokenize())
-    {
-        return operatorComponent.nextToken();
-    }
-
-    if (quotedStringComponent.tryTokenize())
-    {
-        return quotedStringComponent.nextToken();
-    }
-
 
     source.BeginTransaction();
     source.advance();

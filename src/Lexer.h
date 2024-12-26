@@ -11,6 +11,7 @@
 #include "OperatorComponent.h"
 #include "QuotedStringComponent.h"
 #include "CommentStringComponent.h"
+#include <memory>
 
 class Lexer : public Component
 {
@@ -25,14 +26,8 @@ public:
     Token nextToken() override;
 
     void skipWhitespace();
-    Token extractQuotedString();
 
 private:
     InputStream source;
-    IdentifierComponent identifierComponent;
-    DigitComponent digitComponent;
-    OperatorComponent operatorComponent;
-    QuotedStringComponent quotedStringComponent; // New component for quoted strings
-    CommentStringComponent commentStringComponent; // New component for comments
-
+    std::vector<std::unique_ptr<Component>> components;
 };
