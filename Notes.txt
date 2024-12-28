@@ -1,3 +1,6 @@
+new questions:
+add parsers for whitespaces and for unknown symbols
+
 questions:
 how to detect identations?
 how to support languages like spaces?
@@ -17,4 +20,6 @@ detect end of line for languages like go.
 detect identations by whitespaces (or only tabs)
 add unicode 'letters', 'symbols' and other stuff
 support i18n and l10n for keywords, number format, data format, currency, etc.
+
+42. may be string_view is a architecture error?
 
