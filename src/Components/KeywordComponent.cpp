@@ -1,24 +1,10 @@
 #include "KeywordComponent.h"
 
 KeywordComponent::KeywordComponent(InputStream &input, const std::unordered_set<std::string_view> &keywords)
-    : identifierComponent(input), keywords(keywords) {}
-
-bool KeywordComponent::tryTokenize()
+    : KnownTokenComponent<IdentifierComponent>(input)
 {
-    return identifierComponent.tryTokenize();
-}
-
-Token KeywordComponent::nextToken()
-{
-    Token token = identifierComponent.nextToken();
-    if (keywords.find(token.text) != keywords.end())
+    for (const auto &keyword : keywords)
     {
-        token.type = TokenType::Keyword;
+        knownTokens[keyword] = TokenType::Keyword;
     }
-    return token;
-}
-
-bool KeywordComponent::hasMoreTokens() const
-{
-    return identifierComponent.hasMoreTokens();
 }

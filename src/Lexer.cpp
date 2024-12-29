@@ -4,6 +4,11 @@
 #include "EndOfFileComponent.h"
 #include "KeywordComponent.h"
 #include "UnknownComponent.h"
+#include "CommentStringComponent.h"
+#include "DigitComponent.h"
+#include "OperatorComponent.h"
+#include "QuotedStringComponent.h"
+#include "KnownTokenComponent.h"
 
 bool Lexer::hasMoreTokens() const
 {
