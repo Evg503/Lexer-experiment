@@ -1,9 +1,9 @@
 new questions:
-add parsers for whitespaces and for unknown symbols
+[x] add parsers for whitespaces and for unknown symbols
 
 questions:
-how to detect identations?
-how to support languages like spaces?
+[x] how to detect identations?
+[x] how to support languages like spaces?
 how to switch on different languages?
 how to immediate run code?
 how to create a true macro: generate stream of tokens from curent stream?
@@ -14,7 +14,7 @@ TODO:
 
 parse floating number
 parse scrinned symbols in quotes
-parse keywords
+[x] parse keywords
 parse known operators one by one
 detect end of line for languages like go.
 detect identations by whitespaces (or only tabs)

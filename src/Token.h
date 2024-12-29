@@ -6,10 +6,12 @@
 
 enum class TokenType
 {
+    Keyword,
     Identifier,
     Number,
     Operator,
     QuotedString,
+    Whitespace,
     Comment,
     EndOfFile,
     Unknown
@@ -23,6 +25,8 @@ struct Token
     {
         switch (type)
         {
+        case TokenType::Keyword:
+            return "Keyword: [" + std::string(text) + "]";
         case TokenType::Identifier:
             return "Identifier: [" + std::string(text) + "]";
         case TokenType::Number:
@@ -31,6 +35,8 @@ struct Token
             return "Operator: [" + std::string(text) + "]";
         case TokenType::QuotedString:
             return "QuotedString: [" + std::string(text) + "]";
+        case TokenType::Whitespace:
+            return "Whitespace: [" + std::string(text) + "]";
         case TokenType::Comment:
             return "Comment: [" + std::string(text) + "]";
         case TokenType::EndOfFile:

@@ -17,16 +17,12 @@ class Lexer : public Component
 {
 public:
 
-    bool hasMoreTokens() const override;
-    std::vector<Token> getNextLineTokens();
     Lexer(std::string_view source);
-
     bool tryTokenize() override;
-
     Token nextToken() override;
+    bool hasMoreTokens() const override;
 
-    void skipWhitespace();
-
+    std::vector<Token> getNextLineTokens();
 private:
     InputStream source;
     std::vector<std::unique_ptr<Component>> components;

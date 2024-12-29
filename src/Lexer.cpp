@@ -1,5 +1,9 @@
 #include "Lexer.h"
 #include <cctype>
+#include "SpaceComponent.h"
+#include "EndOfFileComponent.h"
+#include "KeywordComponent.h"
+#include "UnknownComponent.h"
 
 bool Lexer::hasMoreTokens() const
 {
@@ -18,11 +22,18 @@ std::vector<Token> Lexer::getNextLineTokens()
 
 Lexer::Lexer(std::string_view source_view)
     : source(source_view){
+    std::unordered_set<std::string_view> keywords = {"if", "else", "while", "return"};
+
+    components.push_back(std::make_unique<EndOfFileComponent>(source));
     components.push_back(std::make_unique<CommentStringComponent>(source));
     components.push_back(std::make_unique<DigitComponent>(source));
     components.push_back(std::make_unique<OperatorComponent>(source));
-    components.push_back(std::make_unique<IdentifierComponent>(source));
+    components.push_back(std::make_unique<KeywordComponent>(source, keywords));
     components.push_back(std::make_unique<QuotedStringComponent>(source));
+    components.push_back(std::make_unique<SpaceComponent>(source));
+    components.push_back(std::make_unique<UnknownComponent>(source));
+
+    // Define keywords
 }
 
 bool Lexer::tryTokenize()
@@ -30,20 +41,8 @@ bool Lexer::tryTokenize()
     return true;
 }
 
-void Lexer::skipWhitespace()
-{
-    source.skipWhitespace();
-}
-
 Token Lexer::nextToken()
 {
-    skipWhitespace();
-
-    if (source.isAtEnd())
-    {
-        return {TokenType::EndOfFile, ""};
-    }
-
     for (auto& component : components)
     {
         if (component->tryTokenize())
@@ -52,9 +51,5 @@ Token Lexer::nextToken()
         }
     }
 
-    source.BeginTransaction();
-    source.advance();
-    auto text = source.getSubstring();
-    source.Commit();
-    return {TokenType::Unknown, text};
+    throw std::runtime_error("No matching component found");
 }

@@ -11,6 +11,9 @@ TEST(LexerTest, HandlesEmptyInput) {
 TEST(LexerTest, HandlesWhitespaceOnly) {
     Lexer lexer("   \t\n");
     auto token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, "   \t\n");
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::EndOfFile);
 }
 
@@ -19,6 +22,10 @@ TEST(LexerTest, HandlesIdentifiers) {
     auto token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Identifier);
     EXPECT_EQ(token.text, "abc");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Identifier);
@@ -36,6 +43,10 @@ TEST(LexerTest, HandlesNumbers) {
     EXPECT_EQ(token.text, "123");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Number);
     EXPECT_EQ(token.text, "456");
 
@@ -50,16 +61,32 @@ TEST(LexerTest, HandlesOperators) {
     EXPECT_EQ(token.text, "+");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "-");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "*");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "/");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
@@ -76,40 +103,80 @@ TEST(LexerTest, HandlesMultiCharacterOperators) {
     EXPECT_EQ(token.text, "++");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "--");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "<=");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, ">=");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "==");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "!=");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "&&");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "||");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "<<");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, ">>");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
@@ -126,12 +193,24 @@ TEST(LexerTest, HandlesMixedInput) {
     EXPECT_EQ(token.text, "abc");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Number);
     EXPECT_EQ(token.text, "123");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
     EXPECT_EQ(token.text, "+");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Operator);
@@ -148,6 +227,10 @@ TEST(LexerTest, HandlesQuotedStrings) {
     EXPECT_EQ(token.text, "hello");
 
     token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::QuotedString);
     EXPECT_EQ(token.text, "world");
 
@@ -159,7 +242,7 @@ TEST(LexerTest, HandlesComments) {
     Lexer lexer("// this is a comment\nabc");
     auto token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Comment);
-    EXPECT_EQ(token.text, " this is a comment");
+    EXPECT_EQ(token.text, "// this is a comment\n");
 
     token = lexer.nextToken();
     EXPECT_EQ(token.type, TokenType::Identifier);
@@ -169,6 +252,53 @@ TEST(LexerTest, HandlesComments) {
     EXPECT_EQ(token.type, TokenType::EndOfFile);
 }
 
+TEST(LexerTest, HandlesComments2) {
+    Lexer lexer("# this is a comment\n#second line");
+    auto token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Comment);
+    EXPECT_EQ(token.text, "# this is a comment\n");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Comment);
+    EXPECT_EQ(token.text, "#second line");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::EndOfFile);
+}
+
+TEST(LexerTest, HandlesKeywords) {
+    Lexer lexer("if abc return whileMe");
+    auto token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Keyword);
+    EXPECT_EQ(token.text, "if");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Identifier);
+    EXPECT_EQ(token.text, "abc");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Keyword);
+    EXPECT_EQ(token.text, "return");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Whitespace);
+    EXPECT_EQ(token.text, " ");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::Identifier);
+    EXPECT_EQ(token.text, "whileMe");
+
+    token = lexer.nextToken();
+    EXPECT_EQ(token.type, TokenType::EndOfFile);
+}
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
