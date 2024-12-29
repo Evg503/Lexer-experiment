@@ -7,20 +7,14 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 
 # Include directories
-include_directories(src)
+include_directories(src) #Old
+include_directories(src/include)
 # Add source files
+file(GLOB components_sources src/Components/*.cpp)
 add_library(Lexer src/Lexer.cpp
-    src/DigitComponent.cpp
-    src/Lexer.cpp
-    src/QuotedStringComponent.cpp
-    src/IdentifierComponent.cpp
     src/InputStream.cpp
-    src/OperatorComponent.cpp
-    src/CommentStringComponent.cpp
-    src/KeywordComponent.cpp
-    src/UnknownComponent.cpp
-    src/SpaceComponent.cpp
-    src/EndOfFileComponent.cpp
+    ${components_sources}
+    
 )
 
 add_executable(LexerMain src/main.cpp)
