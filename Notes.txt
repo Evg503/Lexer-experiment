@@ -1,5 +1,5 @@
-new questions:
-[x] add parsers for whitespaces and for unknown symbols
+new questions
+how to use keyword decorator for lex known operators?
 
 questions:
 [x] how to detect identations?
